@@ -1,19 +1,23 @@
-require_relative 'value'
+require_relative 'change'
+require 'bigdecimal'
 
 class Breaker
-  attr_accessor :currency, :value_obj, :results
+  attr_accessor :currency, :change_obj, :results
 
   def initialize(currency, owed, paid)
     @currency = currency
-    @value_obj = Value.new(owed, paid)
+    @change_obj = Change.new(BigDecimal.new(owed), BigDecimal.new(paid))
     @results = { }
+    find_change
+  end
 
+  def find_change
     currency.denominations.each do |currency_amount|
-      currency_count = (value_obj.change/currency_amount).floor
+      currency_count = (change_obj.change/currency_amount).floor
 
       unless currency_count == 0
         @results[currency_amount] = currency_count
-        value_obj.change = (value_obj.change-currency_count*currency_amount).round(2)
+        change_obj.change = change_obj.change-currency_count*currency_amount
       end
     end
   end

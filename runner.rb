@@ -5,9 +5,9 @@ class Runner
   currency = Currency.new()
 
   print "Enter amount owed: "
-  owed = (gets.chomp).to_f
+  owed = gets.chomp
   print "Enter amount paid: "
-  paid = (gets.chomp).to_f
+  paid = gets.chomp
 
   puts ""
   Breaker.new(currency, owed, paid).print_change

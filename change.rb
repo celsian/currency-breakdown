@@ -1,7 +1,7 @@
-class Value
+class Change
   attr_accessor :change
 
   def initialize(owed, paid)
-    @change = (paid - owed).round(2)
+    @change = paid - owed
   end
 end
